@@ -24,13 +24,13 @@ How to use image-builder
 
 The simplest way to use image-builder (and to obtain the most consistent results) is to run an image-builder machine.
 
-h3. Prerequisites
+### Prerequisites
   1. VirtualBox
   2. Vagrant (optional, but recommended)
   3. the image-builder machine image base box
   4. internet connectivity
 
-h3. Steps to run the image
+### Steps to run the image
 
 Note: These steps assume that Vagrant is installed.
 
@@ -39,13 +39,13 @@ Note: These steps assume that Vagrant is installed.
   3. execute: vagrant up
   4. execute: vagrant ssh
 
-h3. Steps to generate a machine image
+### Steps to generate a machine image
 
   1. get the configuration for a machine
   5. change directory to the configuration
   6. execute: packer (TBD: command syntax; similar to 'packer build image-builder.json')
 
-h3. Using the machine image
+### Using the machine image
 
 Assuming the above steps successfully built an image, they should result in the box folder containing a base box.  The following shell commands should be available:
   * vagrant box add [vagrant name] box/[base box name].box
@@ -59,7 +59,7 @@ How to build the image-builder machine image
 
 This describes how to build the image builder machine image when the image-builder machine image base box is not available.  This also describes how image-builder is built and how it builds machine images.
 
-h3. Create the configuration files
+### Create the configuration files
 
 Note: The steps for creating configuration files for another machine image is similar.
 
@@ -71,7 +71,7 @@ Note: The steps for creating configuration files for another machine image is si
   6. create scripts in the scripts folder
   7. use git to manage; push to repo
 
-h3. Generate the base box
+### Generate the base box
 
   1. install VirtualBox
   2. install Vagrant
@@ -80,7 +80,7 @@ h3. Generate the base box
   5. change working directory to [TBD]
   6. execute: packer (TBD: command syntax)
 
-h3. Using the base box
+### Using the base box
 
 The above steps result in the box folder containing the VirtualBox base box for image-builder.  The following shell commands should be available:
   * vagrant box add image-builder box/image-builder.box
@@ -92,10 +92,10 @@ The above steps result in the box folder containing the VirtualBox base box for 
 How to contribute to image-builder
 ----------------------------------
 
-h3. Updating the configuration
+### Updating the configuration
   * git
 
-h3. Updating this document
+### Updating this document
   * use Markdown [Wikipedia: Markdown](http://en.wikipedia.org/wiki/Markdown)
   * git
 
