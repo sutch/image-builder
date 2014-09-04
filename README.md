@@ -6,7 +6,7 @@ Overview
 
 The purpose of image-builder is to automate the building of machine images.
 
-The secondary uses of image-builder is better understand and test this process and the technologies, and to act as a kickstarter for improving the development/deployment processes.
+Image-builder is also intended to help us better understand and test the image building process and technologies, and to act as a kickstarter for improving the development/deployment process.
 
 The machine image building process is:
   1. define a machine image in a set of configuration files
