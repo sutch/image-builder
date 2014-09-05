@@ -44,7 +44,8 @@
 
     "vboxmanage": [
       ["modifyvm", "{{.Name}}", "--memory", "512"],
-      ["modifyvm", "{{.Name}}", "--cpus", "1"]
+      ["modifyvm", "{{.Name}}", "--cpus", "1"],
+      ["sharedfolder", "add", "{{.Name}}", "--name", "apt_cache", "--hostpath", "apt_cache", "--automount"]
     ],
 
     "shutdown_command": "echo 'vagrant'|sudo -S /sbin/halt -h -p"
