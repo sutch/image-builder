@@ -2,7 +2,7 @@
   "description": "Build an image-builder machine image",
 
   "variables": {
-    "headless": false,
+    "headless": "false",
 
     "iso_url": "http://releases.ubuntu.com/14.04/ubuntu-14.04.1-server-amd64.iso",
     "iso_checksum": "401c5f6666fe2879ac3a9a3247b487723410cf88",
@@ -44,8 +44,7 @@
 
     "vboxmanage": [
       ["modifyvm", "{{.Name}}", "--memory", "512"],
-      ["modifyvm", "{{.Name}}", "--cpus", "1"],
-      ["sharedfolder", "add", "{{.Name}}", "--name", "apt_cache", "--hostpath", "apt_cache", "--automount"]
+      ["modifyvm", "{{.Name}}", "--cpus", "1"]
     ],
 
     "shutdown_command": "echo 'vagrant'|sudo -S /sbin/halt -h -p"
@@ -56,6 +55,8 @@
     "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
     "scripts": [
       "script/vagrant-user.sh",
+      "script/update-upgrade.sh",
+      "script/gnome.sh",
       "script/vboxguest.sh",
       "script/virtualbox.sh",
       "script/vagrant.sh",
