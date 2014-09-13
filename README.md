@@ -4,7 +4,7 @@ image-builder
 Overview
 --------
 
-The purpose of image-builder is to automate the building of machine images.
+The purpose of image-builder is to automate the building of consistent machine images and to provide a consistent machine image to perform the building of consistent machine images.
 
 Image-builder is also intended to help us better understand and test the image building process and technologies, and to act as a kickstarter for improving the development/deployment process.
 
@@ -13,9 +13,9 @@ The machine image building process is:
   2. store and control the configuration files in a repository
   3. start the image-builder machine
   4. clone the configuration files from the repository
-  5. run a script to build the machine image defined by the configuration files
+  5. run a command to build the machine image defined by the configuration files
 
-Image-builder contains the image builder machine image configuration files.
+Image-builder contains the image-builder machine image configuration files.
 
 Image-builder can build the image-builder machine image.
 
@@ -31,17 +31,17 @@ How to use image-builder
 
 Since you'll be developing images, it is expected that you will also have a Git client, an SSH client, and a text editor.
 
-#### Software versions successfully tested
+#### Software versions successfully tested (host)
 
-| Date        | OS           | VirtualBox | Vagrant |
------------------------------------------------------
-| 06-Sep-2014 | OS X 10.9.4  | 4.3.14     | 1.6.3   |
+| Date        | OS           | VirtualBox | Vagrant | Notes |
+|-------------|--------------|------------|---------|-------|
+| 12-Sep-2014 | OS X 10.9.4  | 4.3.14     | 1.6.3   |       |
 
 ### Recommended setup
 
 Below are a set of steps which have been successfully used to prepare for running image-builder in VirtualBox.  These steps result in a directory named image-builder residing in your home directory on the host mache.  The image-builder directory will contain the image-builder base box and folders used for caching of files during the building of new images.
 
-The initial steps vary, depending on whether an image-builder base box is available.  The preferred and simplest path is to use an existing image-builder base box.  Using an existing image-builder base box also provides the most consistent results.
+The initial steps can vary, depending on whether an image-builder base box is available.  The preferred and simplest process is to use an existing image-builder base box.  Using an existing image-builder base box also provides the most consistent results.
 
 #### Preferred option: use existing image-builder base box
 
