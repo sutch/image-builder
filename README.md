@@ -159,6 +159,17 @@ The above steps result in the box directory containing the VirtualBox base box f
   * vagrant ssh
   * vagrant halt
 
+Notes
+-----
+
+### Directory structure across machines
+
+  * /vagrant -- folder on each guest virtual machine
+    * synced with the current working directory (where Vangrantfile resides on the host machine--when following this documentation, the HOME/image-builder folder)
+  * packer_cache directory -- cache of ISOs downloaded by Packer
+    * located on physical host machine; intended to be the single and persistent location for all Packer downloaded ISOs
+    * manually created in each projects directory (/vagrant/dev/[PROJECT]) on the image-builder machine as a soft link to /vagrant/packer_cache
+
 How to contribute to image-builder
 ----------------------------------
 
