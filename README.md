@@ -94,6 +94,7 @@ The following should be executed in the image-builder directory of the host.
   * vagrant ssh -- to SSH to the machine
   * vagrant halt -- to halt the machine
   * vagrant destroy -- to halt the machine and destroy all resources that were created during the machine creation process
+  * vagrant box remove [NAME] -- remove the box from Vagrant
 
 How to modify an existing machine image
 ---------------------------------------
