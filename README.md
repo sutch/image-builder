@@ -1,6 +1,11 @@
 image-builder
 =============
 
+Status
+------
+
+This solution only seems to work for nested 32-bit operating systems.  Halting development until VirtualBox and/or Mac OS X allows nested 64-bit guests.
+
 Overview
 --------
 
@@ -29,13 +34,13 @@ How to use image-builder
   3. internet connectivity
   4. the image-builder machine image base box
 
-Since you'll be developing images, it is expected that you will also have a Git client, an SSH client, and a text editor.
+Since you'll be developing images, it is expected that you will also have a Git client, an SSH client, a text editor, and other developer tools.
 
 #### Software versions successfully tested (host)
 
 | Date        | OS           | VirtualBox | Vagrant | Notes |
 |-------------|--------------|------------|---------|-------|
-| 12-Sep-2014 | OS X 10.9.4  | 4.3.14     | 1.6.3   |       |
+| 12-Sep-2014 | OS X 10.9.4  | 4.3.16     | 1.6.5   |       |
 
 ### Recommended setup
 
@@ -58,16 +63,16 @@ Skip this alternative option if you already have the image-builder base box in t
 
 Additional prerequisite: Packer
 
-  1. in your home directory, execute the followng to create a directory named 'image-builder' and clone the latest version of image-builder code
+  1. in your home directory, execute the followng Git command to create a directory named 'image-builder' and clone the latest version of the image-builder code
 ```
 git clone https://github.com/sutch/image-builder.git
 ```
   2. change the current working directory to the image-builder directory
-  3. execute the following to build the image-builder base box (this step will likely take many minutes)
+  3. execute the following Packer command to build the image-builder base box (this step should take many minutes)
 ```
 packer build image-builder.json
 ```
-  4. when complete, it is recommended that all image-builder source code be removed, including the following (any changes to image-builder configuration should be done from within image-builder)
+  4. once you're ready to use the image-builder machine, it is recommended that all image-builder source code be removed, including the following (any changes to image-builder configuration should be done from within an image-builder machine)
     * .git
     * .gitignore
     * http folder and its contents
@@ -75,16 +80,25 @@ packer build image-builder.json
     * README.md
     * script folder and its contents
 
-
-#### Complete readying the host machine
+#### Readying the host machine
 
 You should now have the image-builder base box in the box directory.
 
-  1. execute the following to create a Vagrant configuration for the image-builder machine
+  1. execute the following Vagrant command to add the image-builder machine to Vagrant
 ```
 vagrant init image-builder box/image-builder.box
 ```
-  2. create a directory named 'dev' in the image-builder directory to manage your image development artifacts
+  2. add the following to the Vagrant.configure block in Vagrantfile to have a console window open when the machine is launched (to debug, it is helpful to examine machines being build from within the image-builder machine) and to increase the memory of the image-builder guest (in order to build image-builder guest and other machines having 512 MB of memory)
+```
+config.vm.provider "virtualbox" do |vb|
+  # Boot with headless mode
+  vb.gui = true
+
+  # Use VBoxManage to change memory and CPU count:
+  vb.customize ["modifyvm", :id, "--memory", 1024, "--cpus", 2]
+end
+```
+  3. create a directory named 'dev' in the image-builder directory to manage your image development artifacts
 
 ### Using the image-builder image
 
@@ -99,31 +113,39 @@ The following should be executed in the image-builder directory of the host.
 How to modify an existing machine image
 ---------------------------------------
 
-This section describes how to obtain and modify the image-builder image.
+This section describes how to obtain and modify the image-builder image using a running image-builder machine.  This instructions can be adapted for building other machine images.
 
-  1. on the host machine with VirtualBox running the image-builder machine
+Notes:
+  * to allow use of tools installed on your physical machine, the image-builder/dev/image-builder directory on your physical machine is used to edit the image's configuration
+  * packer and vagrant are executed from the /vagrant/dev/image-builder directory on the image-builder guest machine to build, execute and test the modified image
+
+  1. on the host machine that has VirtualBox running the image-builder machine as a guest
     1. change the working directory to the image-builder directory
-    2. if the packer-cache directory does not exist, create it
-    3. clone the image-builder configuration to the dev folder
+    2. if the packer-cache directory does not yet exist, create it
+    3. execute the following Git command to clone the image-builder configuration to the dev folder
 ```
 git clone https://github.com/sutch/image-builder.git dev/image-builder
 ```
-    4. run an image-builder machine and SSH to the machine
+    4. execute the following vagrant commands to start an image-builder machine and SSH to the machine
 ```
 vagrant up
 vagrant ssh
 ```
-
-All work on the guest machine will take place from within the image-builder machine's /vagrant folder, which is shared with and accessible from the host's image-builder folder.
-
-  2. change working directory to /vagrant/dev/image-builder
-  3. create a soft link to enable caching to the host machine
+  2. you should now have a shell, using SSH, on the image-builder machine to perform the following
+    1. change working directory to /vagrant/dev/image-builder
+    2. create a soft link to enable caching of Packer requested ISOs to the host machine
 ```
 ln -s /vagrant/packer_cache packer_cache
 ```
+    3. execute the following command to build image-builder
+```
+packer build image-builder.json
+```
 
-How to build a new machine image
---------------------------------
+
+
+How to create and build a new machine image
+-------------------------------------------
 
 This section describes how to build the image-builder machine image when the image-builder machine image base box is not available.  This also describes how image-builder is built and how it builds machine images.
 
